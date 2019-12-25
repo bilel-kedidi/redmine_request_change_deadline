@@ -12,7 +12,7 @@ class RequestChangeDeadline < ActiveRecord::Base
   safe_attributes 'reason',
                   'new_deadline'
 
-  scope :visible, -> { User.current.login != "admin" ? where(user_id: User.current.id) : where(nil) }
+  scope :visible, -> { (User.current.allowed_to_globally?(:approve_deadline_request, {}) ||  User.current.allowed_to_globally?(:reject_deadline_request, {}) )? where(nil) : where(user_id: User.current.id) }
 
   def status
     s = super
@@ -20,6 +20,7 @@ class RequestChangeDeadline < ActiveRecord::Base
     when '0', 0  then 'Pending'
     when '1', 1  then 'Approved'
     when '2', 2  then 'Rejected'
+    when '3', 3  then 'Submitted'
     else
       '-'
     end

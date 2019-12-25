@@ -5,9 +5,7 @@ en:
   field_reason: Request reason
   field_old_deadline: Old deadline
   field_new_deadline: New deadline
-  field_status: Request status
   field_author: Author
-  field_user: Requester
   button_apply: Apply
   button_save: Save
   button_edit: Edit

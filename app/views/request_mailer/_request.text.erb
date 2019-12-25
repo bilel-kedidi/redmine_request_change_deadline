@@ -1,10 +1,8 @@
-<%= "Request: #{request.id} / Reason: #{request.reason}" %>
-<%= request_url %>
+ New Submitted Requests
 
-Requester : <%= user.firstname %> <%= user.lastname %>
-Issue(s):
-<% issues.each do |issue| %>
-  Issue_<%= issue.id %> : <%= issue_url issue.id %>
+
+<% requests.each do |request|%>
+
+     -  <%= request.id %> :<%= request.issue %> <%= request.new_deadline %>
+
 <% end %>
-Project_<%= request.project_id %> : <%= project_url request.project_id %>
-Reason : <%= request.reason %>

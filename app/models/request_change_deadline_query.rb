@@ -43,7 +43,7 @@ class RequestChangeDeadlineQuery < Query
     add_available_filter"reason", :type => :text
 
     add_available_filter"status", :type => :list,
-                        values:[  ['Pending', '0'],  ['Approved', '1'],  ['Rejected', '2'] ]
+                        values:[  ['Pending', '0'],   ['Submitted', '3'] , ['Approved', '1'],  ['Rejected', '2'] ]
 
     add_available_filter"old_deadline", :type => :date
 

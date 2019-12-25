@@ -8,6 +8,8 @@ post 'change_deadlines/new', to: 'change_deadlines#create'
 patch '/change_deadlines/:id/edit', to: 'change_deadlines#update'
 post '/change_deadlines/:id/approve_request', to: 'change_deadlines#approve_request', :as => 'approve_request'
 get '/change_deadlines/:id/approve_request', to: 'change_deadlines#approve_request'
+post '/change_deadlines/:id/submit_request', to: 'change_deadlines#submit_request', :as => 'submit_request'
+get '/change_deadlines/:id/submit_request', to: 'change_deadlines#submit_request'
 post '/change_deadlines/:id/reject_request', to: 'change_deadlines#reject_request', :as => 'reject_request'
 get '/change_deadlines/:id/reject_request', to: 'change_deadlines#reject_request'
 match '/change_deadlines', :controller => 'change_deadlines', :action => 'destroy', :via => :delete
@@ -17,6 +19,7 @@ resources :change_deadlines do
     match 'bulk_edit', :via => [:get, :post]
     match 'approve_request', :via => [:get, :post]
     match 'reject_request', :via => [:get, :post]
+    match 'submit_request', :via => [:get, :post]
     post 'bulk_update'
   end
 end

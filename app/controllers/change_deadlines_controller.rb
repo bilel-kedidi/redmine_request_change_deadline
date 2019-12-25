@@ -6,8 +6,8 @@ class ChangeDeadlinesController < ApplicationController
   helper :change_deadlines
 
   before_action :find_request, only: [:edit, :update, :show]
-  #before_action :find_request, only: [:edit, :update, :show, :destroy, :approve_request, :reject_request]
-  before_action :find_requests, :only => [:bulk_edit, :bulk_update, :destroy, :approve_request, :reject_request]
+
+  before_action :find_requests, :only => [:bulk_edit, :bulk_update, :destroy, :submit_request, :approve_request, :reject_request]
 
   def new
     @request = RequestChangeDeadline.new
@@ -84,21 +84,6 @@ class ChangeDeadlinesController < ApplicationController
     redirect_to change_deadlines_path
   end
 
-  #def approve_request
-  #  @request.status = 1
-  #  @request.approved_by_id = User.current.id
-  #  @issue = Issue.find(@request.issue_id)
-  #  @cf_setting = Setting.plugin_redmine_request_change_deadline['custom_field']
-  #  @cfv = @issue.custom_values.detect { |cv|
-  #    cv.custom_field_id == @cf_setting.first.to_i
-  #  }
-  #  if @cfv
-  #    @cfv.value = @request.new_deadline
-  #    @cfv.save
-  #    @request.save
-  #  end
-  #  redirect_to change_deadlines_path
-  #end
 
   def approve_request
     @requests.each do |request|
@@ -114,6 +99,15 @@ class ChangeDeadlinesController < ApplicationController
         cfv.save
         request.save
       end
+    end
+    redirect_to change_deadlines_path
+  end
+
+  def submit_request
+    @requests.each do |request|
+      request.status = 3
+      request.save
+      RequestMailer.deliver_request_add(User.admin, @requests)
     end
     redirect_to change_deadlines_path
   end
@@ -146,8 +140,6 @@ class ChangeDeadlinesController < ApplicationController
     @requests = RequestChangeDeadline.
         where(:id => (params[:id] || params[:ids])).to_a
     raise ActiveRecord::RecordNotFound if @requests.empty?
-    #@projects = @issues.collect(&:project).compact.uniq
-    #@project = @projects.first if @projects.size == 1
   rescue ActiveRecord::RecordNotFound
     render_404
   end
