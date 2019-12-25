@@ -1,5 +1,5 @@
 <ul>
-  <% if User.current.allowed_to_globally?(:edit_deadline_request, {}) %>
+  <% if User.current.allowed_to_globally?(:edit_deadline_request, {}) and @can_edit%>
     <li><%= context_menu_link l(:button_edit), bulk_edit_change_deadlines_path(:ids => @request_ids),
                               :class => 'icon icon-edit' %></li>
   <% end %>

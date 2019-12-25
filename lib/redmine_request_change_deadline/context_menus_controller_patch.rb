@@ -13,6 +13,7 @@ module RedmineRequestChangeDeadline
           @request = @requests.first
         end
         @request_ids = @requests.map(&:id).sort
+        @can_edit = !(@requests.map(&:status).include?('Approved') || @requests.map(&:status).include?('Rejected'))
         render :layout => false
       end
     end

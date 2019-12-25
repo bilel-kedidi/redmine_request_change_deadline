@@ -12,7 +12,7 @@ class ChangeDeadlinesController < ApplicationController
   def new
     @request = RequestChangeDeadline.new
     @issue_ids = params[:issue_ids]
-    params[:token] = "#{('A'..'Z').to_a[rand(26)]}#{Time.now.to_i}"
+    params[:token] = "#{('A'..'Z').to_a[rand(26)]}#{(1..99).to_a[rand(90)]}-#{Time.now.to_date}"
     @issues = Issue.find @issue_ids
   end
 
@@ -101,6 +101,7 @@ class ChangeDeadlinesController < ApplicationController
         cfv.value = request.new_deadline
         cfv.save
         request.save
+        RequestMailer.deliver_request_approved(request)
       end
     end
     redirect_to change_deadlines_path
@@ -125,6 +126,7 @@ class ChangeDeadlinesController < ApplicationController
     @requests.each do |request|
       request.status = 2
       request.save
+      RequestMailer.deliver_request_rejected(request)
     end
     redirect_to change_deadlines_path
   end

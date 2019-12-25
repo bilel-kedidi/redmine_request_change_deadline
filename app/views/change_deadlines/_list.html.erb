@@ -9,7 +9,7 @@
       <thead>
       <tr>
         <th class="checkbox hide-when-print">
-          <%= check_box_tag 'check_all', '', false, :class => 'toggle-selection',
+          <%= check_box_tag 'check_all', '', false, :class => 'toggle-selection-request',
                             :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
         </th>
         <% query.inline_columns.each do |column| %>
@@ -80,3 +80,13 @@
   </div>
 <% end %>
 
+<script>
+  $(function(){
+      $('input[type=checkbox].toggle-selection-request').on('change', toggleRequestSelection);
+  })
+    function toggleRequestSelection(el) {
+        var checked = $(this).prop('checked');
+        var boxes = $(this).parents('table').find('input[name=ids\\[\\]]');
+        boxes.prop('checked', checked).parents('.hascontextmenu').toggleClass('context-menu-selection', checked);
+    }
+</script>
