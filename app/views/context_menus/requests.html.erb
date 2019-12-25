@@ -10,12 +10,12 @@
   <% end %>
 
   <% if User.current.allowed_to_globally?(:approve_deadline_request, {}) %>
-    <li><%= context_menu_link l(:approve_deadline_request), approve_request_change_deadlines_path(:ids => @request_ids),
+    <li><%= context_menu_link l(:button_approve), approve_request_change_deadlines_path(:ids => @request_ids),
                               :class => 'icon icon-save' %></li>
   <% end %>
 
   <% if User.current.allowed_to_globally?(:reject_deadline_request, {}) %>
-    <li><%= context_menu_link l(:reject_deadline_request), reject_request_change_deadlines_path(:ids => @request_ids),
+    <li><%= context_menu_link l(:button_reject), reject_request_change_deadlines_path(:ids => @request_ids),
                               :class => 'icon icon-del' %></li>
   <% end %>
 </ul>

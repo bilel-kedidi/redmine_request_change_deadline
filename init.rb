@@ -1,32 +1,10 @@
 Redmine::Plugin.register :redmine_request_change_deadline do
   name 'Redmine Request Change Deadline plugin'
-  author 'Author name'
+  author 'Bilel KEDIDI'
   description 'This is a plugin for Redmine'
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
-
-  module RedmineRequestChangeDeadline
-    class Hooks < Redmine::Hook::ViewListener
-      render_on :view_issues_context_menu_end, :partial => 'issues/hooks/view_issues_context_menu_end'
-    end
-
-    module ContextMenusControllerPatch
-      def self.included(base)
-        base.send(:include, InstanceMethods)
-      end
-
-      module InstanceMethods
-        def requests
-          if (@requests.size == 1)
-            @request = @requests.first
-          end
-          @request_ids = @requests.map(&:id).sort
-          render :layout => false
-        end
-      end
-    end
-  end
+  url 'https://www.github.com/bilel-kedidi/redmine_request_change_deadline'
+  author_url 'https://www.biz-solution.pro'
 
   menu :admin_menu, :request_change_deadline, {:controller => 'change_deadlines', :action => 'index' },
        :caption => 'Requests to change deadline', html: {class: 'icon icon-list'}
@@ -48,7 +26,7 @@ end
 
 Rails.application.config.to_prepare do
   QueriesController.send(:include, RedmineRequestChangeDeadline::QueriesControllerPatch)
-    #ContextMenusController.send(:include, RedmineRequestChangeDeadline::ContextMenusControllerPatch)
+   ContextMenusController.send(:include, RedmineRequestChangeDeadline::ContextMenusControllerPatch)
 end
 
 

@@ -1,4 +1,4 @@
-require_dependency 'context_menus_controller_patch'
+require_dependency 'context_menus_controller'
 
 module RedmineRequestChangeDeadline
   module ContextMenusControllerPatch
@@ -8,8 +8,7 @@ module RedmineRequestChangeDeadline
 
     module InstanceMethods
       def requests
-        @requests = RequestChangeDeadline.
-            where(:id => (params[:id] || params[:ids])).to_a
+        @requests = RequestChangeDeadline.where(:id => (params[:id] || params[:ids])).to_a
         if (@requests.size == 1)
           @request = @requests.first
         end

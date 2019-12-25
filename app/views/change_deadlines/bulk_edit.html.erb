@@ -3,6 +3,7 @@
 <h2>Edit requests change deadline</h2>
 
 <%= form_tag bulk_update_change_deadlines_path do %>
+  <%= hidden_field_tag 'ids[]', params[:ids] %>
   <div class="autoscroll">
     <table class="list issues odd-even">
       <thead>
@@ -32,8 +33,8 @@
           <td><%= request.issue.spent_hours %></td>
           <td><%= request.issue.due_date %></td>
           <td><%= request.old_deadline %></td>
-          <td><%= date_field_tag "new_deadline[#{request.issue.id}]" %></td>
-          <td><%= text_field_tag "reason[#{request.issue.id}]" %></td>
+          <td><%= date_field_tag "new_deadline[#{request.issue.id}]", request.new_deadline  %></td>
+          <td><%= text_field_tag "reason[#{request.issue.id}]", request.reason %></td>
         </tr>
       <% end %>
       </tbody>
