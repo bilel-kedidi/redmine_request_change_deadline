@@ -14,7 +14,7 @@
                               :class => 'icon icon-save' %></li>
   <% end %>
 
-  <% if User.current.allowed_to_globally?(:approve_deadline_request, {}) &&  User.current.allowed_to_globally?(:reject_deadline_request, {})  %>
+  <% if !User.current.allowed_to_globally?(:approve_deadline_request, {}) &&  !User.current.allowed_to_globally?(:reject_deadline_request, {})  %>
     <li><%= context_menu_link "Submit", submit_request_change_deadlines_path(:ids => @request_ids),
                               :class => 'icon icon-save' %></li>
   <% end %>
