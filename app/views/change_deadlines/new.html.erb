@@ -1,6 +1,6 @@
 <% @cf_setting = Setting.plugin_redmine_request_change_deadline['custom_field'] %>
 
-<h2><%= l('new_request') %></h2>
+<h2><%= l('new_request') %>: <%= params[:token]  %></h2>
 
 <%= form_for @request, url: new_change_deadline_path, method: :post do |f| %>
   <%=  hidden_field_tag :token, params[:token] %>
