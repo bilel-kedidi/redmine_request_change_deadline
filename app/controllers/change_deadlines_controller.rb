@@ -12,6 +12,7 @@ class ChangeDeadlinesController < ApplicationController
   def new
     @request = RequestChangeDeadline.new
     @issue_ids = params[:issue_ids]
+    params[:token] = "#{('A'..'Z').to_a[rand(26)]}#{Time.now.to_i}"
     @issues = Issue.find @issue_ids
   end
 
@@ -29,6 +30,7 @@ class ChangeDeadlinesController < ApplicationController
       @request.project_id = issue.project_id
       @request.new_deadline = params[:new_deadline]["#{issue.id}"]
       @request.reason = params[:reason]["#{issue.id}"]
+      @request.token = params[:token]
       @cf_setting = Setting.plugin_redmine_request_change_deadline['custom_field']
       @cfv = issue.custom_values.detect { |cv|
         cv.custom_field_id == @cf_setting.first.to_i
@@ -41,6 +43,7 @@ class ChangeDeadlinesController < ApplicationController
 
   def index
     retrieve_request_change_deadline_query
+    @query.group_by = params[:group_by]  || 'token'
     if @query.valid?
       @requests_count = @query.requests_count
       @request_pages = Paginator.new @requests_count, per_page_option, params['page']

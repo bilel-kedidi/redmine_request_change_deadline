@@ -16,6 +16,7 @@ class RequestChangeDeadlineQuery < Query
       QueryColumn.new(:assigned_to, :sortable => lambda {User.fields_for_order_statement}, :groupable => true),
       QueryColumn.new(:author, :sortable => lambda {User.fields_for_order_statement("authors")}, :groupable => true),
       QueryColumn.new(:done_ratio, :sortable => "#{Issue.table_name}.done_ratio", :groupable => true),
+      QueryColumn.new(:token, :groupable => true),
 
   ]
 
@@ -27,7 +28,7 @@ class RequestChangeDeadlineQuery < Query
 
   def initialize(attributes=nil, *args)
     super attributes
-    self.filters ||= { 'issue_id' => {:operator => "*", :values => [""]} }
+    self.filters ||= {'issue_id' => {:operator => "*", :values => [""]} }
   end
 
   def initialize_available_filters

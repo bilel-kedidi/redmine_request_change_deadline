@@ -10,7 +10,7 @@ class RequestChangeDeadline < ActiveRecord::Base
   acts_as_customizable
 
   safe_attributes 'reason',
-                  'new_deadline'
+                  'new_deadline', 'token'
 
   scope :visible, -> { (User.current.allowed_to_globally?(:approve_deadline_request, {}) ||  User.current.allowed_to_globally?(:reject_deadline_request, {}) )? where(nil) : where(user_id: User.current.id) }
 
