@@ -13,5 +13,11 @@
                      value: "#{settings['custom_field']}" %>
     </td>
   </tr>
+  <tr>
+    <td>SYNC Deadline with due date</td>
+    <td>  <%= select_tag "settings_issue_status", options_for_select(IssueStatus.all.map{|is| [is.name, is.id]}, selected: settings['issue_status']),
+                         name: "settings[issue_status][]",
+                         multiple: true %></td>
+  </tr>
   </tbody>
 </table>
