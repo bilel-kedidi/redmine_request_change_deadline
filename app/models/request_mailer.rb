@@ -13,24 +13,24 @@ class RequestMailer < Mailer
     end
   end
 
-  def request_approved(request)
+  def request_approved(user, request)
     @request = request
     @user = request.user
     mail :to => @user.mail, :subject => "Request Approved"
   end
 
-  def self.deliver_request_approved(request)
-    request_approved(request).deliver_now
+  def self.deliver_request_approved(user, request)
+    request_approved(user, request).deliver_now
   end
 
-  def request_rejected(request)
+  def request_rejected(user, request)
     @request = request
     @user = request.user
     mail :to => @user.mail, :subject => "Request Rejected"
   end
 
-  def self.deliver_request_rejected(request)
-    request_rejected(request).deliver_now
+  def self.deliver_request_rejected(user, request)
+    request_rejected(user, request).deliver_now
   end
 
 

@@ -101,7 +101,7 @@ class ChangeDeadlinesController < ApplicationController
         cfv.value = request.new_deadline
         cfv.save
         request.save
-        RequestMailer.deliver_request_approved(request)
+        RequestMailer.deliver_request_approved(request.user, request)
       end
     end
     redirect_to change_deadlines_path
@@ -126,7 +126,7 @@ class ChangeDeadlinesController < ApplicationController
     @requests.each do |request|
       request.status = 2
       request.save
-      RequestMailer.deliver_request_rejected(request)
+      RequestMailer.deliver_request_rejected(request.user, request)
     end
     redirect_to change_deadlines_path
   end
