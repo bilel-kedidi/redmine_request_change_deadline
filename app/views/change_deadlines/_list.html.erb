@@ -22,12 +22,14 @@
       </tr>
       </thead>
       <tbody>
+      <% k = 0 %>
       <% grouped_request_list(requests, query) do |request, level, group_name, group_count, group_totals| -%>
         <% if group_name %>
+          <% k += 1 %>
           <% reset_cycle %>
           <tr style="height: 10px;" class="group open">
             <td colspan="<%= query.inline_columns.size + 2 %>">
-              <%= check_box_tag 'check_all', '', false, :class => 'toggle-selection-group', id: "check_group_#{group_name.to_s.parameterize}",
+              <%= check_box_tag 'check_all', '', false, :class => 'toggle-selection-group', id: "check_group_#{k}",
                                 :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
               <span class="expander" onclick="toggleRowGroup(this);">&nbsp;</span>
               <span class="name"><%= group_name %></span> <span class="count"><%= group_count %></span> <span class="totals"><%= group_totals %></span>
@@ -43,7 +45,7 @@
         <% else %>
           <tr id="issue-<%= request.id %>" class="hascontextmenu <%= cycle('odd', 'even') %>">
         <% end %>
-        <td class="checkbox hide-when-print"><%= check_box_tag("ids[]", request.id, false, :id => nil, class: "check_group_#{group_name.to_s.parameterize}") %></td>
+        <td class="checkbox hide-when-print"><%= check_box_tag("ids[]", request.id, false, :id => nil, class: "check_group_#{k}") %></td>
           <% query.inline_columns.each do |column| %>
             <%= content_tag('td', change_deadline_column_content(column, request), :class => column.css_classes) %>
           <% end %>
