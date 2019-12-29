@@ -16,6 +16,7 @@ Redmine::Plugin.register :redmine_request_change_deadline do
     permission :view_deadline_request, :change_deadlines => [:index, :show]
     permission :edit_deadline_request, :change_deadlines => [:edit, :update]
     permission :delete_deadline_request, :change_deadlines => :destroy
+    permission :submit_deadline_request, :change_deadlines => :submit_request
     permission :approve_deadline_request, :change_deadlines => :approve_request
     permission :reject_deadline_request, :change_deadlines => :reject_request
     permission :create_deadline_request, :change_deadlines => [:create, :new, :submit_request]

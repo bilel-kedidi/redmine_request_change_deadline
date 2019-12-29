@@ -5,6 +5,7 @@ class ChangeDeadlinesController < ApplicationController
   include ChangeDeadlinesHelper
   helper :change_deadlines
 
+  before_action :authorize_globally
   before_action :find_request, only: [:edit, :update, :show]
 
   before_action :find_requests, :only => [:bulk_edit, :bulk_update, :destroy, :submit_request, :approve_request, :reject_request]
