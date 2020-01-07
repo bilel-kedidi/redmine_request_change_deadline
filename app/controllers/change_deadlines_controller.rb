@@ -5,12 +5,13 @@ class ChangeDeadlinesController < ApplicationController
   include ChangeDeadlinesHelper
   helper :change_deadlines
 
-  before_action :authorize_globally
+  before_action :authorize_global
   before_action :find_request, only: [:edit, :update, :show]
 
   before_action :find_requests, :only => [:bulk_edit, :bulk_update, :destroy, :submit_request, :approve_request, :reject_request]
 
   def new
+    params[:back_url] = request.referrer
     @request = RequestChangeDeadline.new
     @issue_ids = params[:issue_ids]
     params[:token] = "#{('A'..'Z').to_a[rand(26)]}#{(1..99).to_a[rand(90)]}-#{Time.now.to_date}"
@@ -39,7 +40,7 @@ class ChangeDeadlinesController < ApplicationController
       @request.old_deadline = @cfv.value if @cfv
       @request.save
     end
-    redirect_to issues_path
+    redirect_to  params[:back_url].presence || issues_path
   end
 
   def index

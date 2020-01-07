@@ -3,6 +3,7 @@
 <h2><%= l('new_request') %>: <%= params[:token]  %></h2>
 
 <%= form_for @request, url: new_change_deadline_path, method: :post do |f| %>
+  <%=  hidden_field_tag :back_url, params[:back_url] %>
   <%=  hidden_field_tag :token, params[:token] %>
   <div class="autoscroll">
     <table class="list issues odd-even">
